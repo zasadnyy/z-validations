@@ -18,3 +18,9 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+z-validations/.gradle
+z-validations/gradle
+z-validations/z-validations-sample/build
+z-validations/z-validations/build
+gradlew
+gradlew.bat
