@@ -29,6 +29,6 @@
     <string name="zvalidations_not_positive_integer">Field should be positive integer</string>
     <string name="zvalidations_empty">Field could not be empty</string>
     <string name="zvalidations_not_in_range">Field should be between %1$d and %2$d</string>
-    <string name="zvalidations_not_email">Field is not valid email address</string>
+    <string name="zvalidations_not_email">Value is not valid email address</string>
 
 </resources>

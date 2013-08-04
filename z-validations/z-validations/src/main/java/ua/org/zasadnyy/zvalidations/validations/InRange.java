@@ -53,6 +53,13 @@ public class InRange extends BaseValidation {
 
     @Override
     public boolean isValid(String text) {
+        try {
+            int value = Integer.parseInt(text);
+            if ((value > mMin) && (value < mMax)) {
+                return true;
+            }
+        } catch (NumberFormatException ignored) {
+        }
         return false;
     }
 }

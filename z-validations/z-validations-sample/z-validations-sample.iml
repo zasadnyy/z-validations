@@ -70,6 +70,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
     <orderEntry type="module" module-name="z-validations-z-validations" exported="" />
+    <orderEntry type="library" exported="" name="crouton-1.8.1" level="project" />
   </component>
 </module>
 

@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.Form;
 import ua.org.zasadnyy.zvalidations.FormUtils;
@@ -80,7 +82,6 @@ public class SampleActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    FormUtils.hideKeyboard(SampleActivity.this, mAge);
                     submit();
                     return true;
                 }
@@ -98,8 +99,9 @@ public class SampleActivity extends Activity {
     }
 
     private void submit() {
+        FormUtils.hideKeyboard(SampleActivity.this, mAge);
         if (mForm.isValid()) {
-            Toast.makeText(this, getString(R.string.sample_activity_form_is_valid), Toast.LENGTH_SHORT).show();
+            Crouton.makeText(this, getString(R.string.sample_activity_form_is_valid), Style.CONFIRM).show();
         }
     }
 

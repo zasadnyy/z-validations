@@ -31,6 +31,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
  */
@@ -68,8 +71,7 @@ public class Form {
     }
 
     protected void showErrorMessage(String message) {
-        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
-//        Crouton.makeText(mActivity, message, Style.ALERT).show();
+        Crouton.makeText(mActivity, message, Style.ALERT).show();
     }
 
 

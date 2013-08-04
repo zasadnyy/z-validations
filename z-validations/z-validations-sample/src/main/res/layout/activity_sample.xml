@@ -12,7 +12,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords|textPersonName"
             android:hint="Name"
             android:ems="10"
             android:autoText="false"
@@ -60,6 +60,7 @@
             android:id="@+id/submit"
             android:layout_below="@+id/age"
             android:focusable="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"/>
 
 </RelativeLayout>
