@@ -5,7 +5,7 @@ package ua.org.zasadnyy.zvalidations.validations;
  */
 public interface Validation {
 
-    int getErrorMessageId();
+    String getErrorMessage();
 
     boolean isValid(String text);
 

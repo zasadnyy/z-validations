@@ -1,20 +1,30 @@
 package ua.org.zasadnyy.sample;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.Form;
-import ua.org.zasadnyy.zvalidations.validations.IsPositiveInteger;
+import ua.org.zasadnyy.zvalidations.FormUtils;
+import ua.org.zasadnyy.zvalidations.validations.InRange;
+import ua.org.zasadnyy.zvalidations.validations.IsEmail;
 import ua.org.zasadnyy.zvalidations.validations.NotEmpty;
 
 
 public class SampleActivity extends Activity {
+
+    private static final String GITHUB_PAGE = "https://github.com/zasadnyy/z-validations";
 
     private EditText mName;
     private EditText mEmail;
@@ -30,24 +40,25 @@ public class SampleActivity extends Activity {
         setContentView(R.layout.activity_sample);
 
         initFields();
-
-        mForm = new Form(this);
-        mForm.addField(Field.using(mName).validate(new NotEmpty()));
-        mForm.addField(Field.using(mEmail).validate(new NotEmpty()));
-        mForm.addField(Field.using(mAge).validate(new IsPositiveInteger()));
-
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submit();
-            }
-        });
+        initValidationForm();
+        initCallbacks();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sample, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_github:
+                openGitHub();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initFields() {
@@ -57,10 +68,44 @@ public class SampleActivity extends Activity {
         mSubmit = (Button) findViewById(R.id.submit);
     }
 
+    private void initValidationForm() {
+        mForm = new Form(this);
+        mForm.addField(Field.using(mName).validate(NotEmpty.build(this)));
+        mForm.addField(Field.using(mEmail).validate(NotEmpty.build(this)).validate(IsEmail.build(this)));
+        mForm.addField(Field.using(mAge).validate(InRange.build(this, 0, 120)));
+    }
+
+    private void initCallbacks() {
+        mAge.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    FormUtils.hideKeyboard(SampleActivity.this, mAge);
+                    submit();
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+        mSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
+            }
+        });
+    }
+
     private void submit() {
-        if(mForm.isValid()){
-            Toast.makeText(this, "Form is valid", Toast.LENGTH_SHORT).show();
+        if (mForm.isValid()) {
+            Toast.makeText(this, getString(R.string.sample_activity_form_is_valid), Toast.LENGTH_SHORT).show();
         }
     }
-    
+
+    private void openGitHub() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PAGE));
+        startActivity(browserIntent);
+    }
+
 }

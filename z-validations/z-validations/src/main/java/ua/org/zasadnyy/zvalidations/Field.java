@@ -15,11 +15,9 @@ public class Field {
 
     private List<Validation> mValidations = new LinkedList<Validation>();
     private EditText mTextView;
-    private Context mContext;
 
     private Field(EditText textView) {
         this.mTextView = textView;
-        this.mContext = textView.getContext();
     }
 
     public static Field using(EditText textView) {
@@ -38,7 +36,7 @@ public class Field {
     public boolean isValid() throws FieldValidationException {
         for (Validation validation : mValidations) {
             if (!validation.isValid(mTextView.getText().toString())) {
-                String errorMessage = mContext.getString(validation.getErrorMessageId());
+                String errorMessage = validation.getErrorMessage();
                 throw new FieldValidationException(errorMessage, mTextView);
             }
         }
