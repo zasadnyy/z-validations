@@ -29,13 +29,24 @@ import android.widget.EditText;
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
  */
-public class FieldValidationException extends Exception {
+public class ValidationResult {
 
-    private EditText mTextView;
+    private final boolean mIsValid;
+    private final String mMessage;
+    private final EditText mTextView;
 
-    public FieldValidationException(String message, EditText textView) {
-        super(message);
+    public ValidationResult(boolean isValid, String message, EditText textView) {
+        mIsValid = isValid;
+        mMessage = message;
         mTextView = textView;
+    }
+
+    public boolean isValid() {
+        return mIsValid;
+    }
+
+    public String getMessage() {
+        return mMessage;
     }
 
     public EditText getTextView() {

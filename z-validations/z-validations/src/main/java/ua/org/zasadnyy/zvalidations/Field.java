@@ -56,14 +56,14 @@ public class Field {
         return mTextView;
     }
 
-    public boolean isValid() throws FieldValidationException {
+    public ValidationResult validate() {
         for (Validation validation : mValidations) {
             if (!validation.isValid(mTextView.getText().toString())) {
                 String errorMessage = validation.getErrorMessage();
-                throw new FieldValidationException(errorMessage, mTextView);
+                return new ValidationResult(false, errorMessage, mTextView);
             }
         }
-        return true;
+        return new ValidationResult(true, null, null);
     }
 
 }
