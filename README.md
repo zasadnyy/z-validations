@@ -63,6 +63,7 @@ __v.0.2__
 * Code refactoring (thanks [tadfisher](https://github.com/tadfisher) for pull request)
 * Added ability to change how validation errors are displayed
 * Moved [Crouton](https://github.com/keyboardsurfer/Crouton) dependency from library to sample project
+* Published [Demo application on Google Play](https://play.google.com/store/apps/details?id=ua.org.zasadnyy.sample.zvalidations)
 
 __v.0.1__ 
 * Initial release
