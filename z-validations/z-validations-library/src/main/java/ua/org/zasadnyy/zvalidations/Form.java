@@ -30,39 +30,44 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
  */
 public class Form {
 
     private List<Field> mFields = new ArrayList<Field>();
+    private ValidationFailedRenderer mValidationFailedRenderer;
     private Activity mActivity;
 
     public Form(Activity activity) {
         this.mActivity = activity;
+        this.mValidationFailedRenderer = new TextViewValidationFailedRenderer(activity);
     }
 
     public void addField(Field field) {
         mFields.add(field);
     }
 
+    public void setValidationFailedRenderer(ValidationFailedRenderer renderer) {
+        this.mValidationFailedRenderer = renderer;
+    }
+
     public boolean isValid() {
         boolean isValid = true;
+        mValidationFailedRenderer.clear();
 
         for (Field field : mFields) {
-            ValidationResult result = field.validate();
+            FieldValidationResult result = field.validate();
 
             if (!result.isValid()) {
-                EditText textView = result.getTextView();
+                ValidationResult firstFailedValidation = result.getFailedValidationResults().get(0);
+                EditText textView = firstFailedValidation.getTextView();
                 textView.requestFocus();
                 textView.selectAll();
 
                 FormUtils.showKeyboard(mActivity, textView);
 
-                showErrorMessage(result.getMessage());
+                mValidationFailedRenderer.showErrorMessage(firstFailedValidation);
 
                 isValid = false;
                 break;
@@ -70,9 +75,5 @@ public class Form {
         }
 
         return isValid;
-    }
-
-    protected void showErrorMessage(String message) {
-        Crouton.makeText(mActivity, message, Style.ALERT).show();
     }
 }

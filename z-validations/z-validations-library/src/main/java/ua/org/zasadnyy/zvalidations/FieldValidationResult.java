@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -24,40 +23,44 @@
 
 package ua.org.zasadnyy.zvalidations;
 
-import android.widget.EditText;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public class ValidationResult {
+public class FieldValidationResult {
 
-    private final boolean mIsValid;
-    private final String mMessage;
-    private final EditText mTextView;
+    private List<ValidationResult> mValidationResults = new LinkedList<ValidationResult>();
 
-    public static ValidationResult buildSuccess(EditText textView) {
-        return new ValidationResult(true, "", textView);
+    public FieldValidationResult() {
     }
 
-    public static ValidationResult buildFailed(EditText textView, String message) {
-        return new ValidationResult(false, message, textView);
-    }
-
-    private ValidationResult(boolean isValid, String message, EditText textView) {
-        mIsValid = isValid;
-        mMessage = message;
-        mTextView = textView;
+    public void addValidationResult(ValidationResult validationResult) {
+        mValidationResults.add(validationResult);
     }
 
     public boolean isValid() {
-        return mIsValid;
+        for (ValidationResult validationResult : mValidationResults) {
+            if (!validationResult.isValid()) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public String getMessage() {
-        return mMessage;
+    public List<ValidationResult> getFailedValidationResults() {
+        List<ValidationResult> failedValidations = new LinkedList<ValidationResult>();
+        for (ValidationResult validationResult : mValidationResults) {
+            if(!validationResult.isValid()) {
+                failedValidations.add(validationResult);
+            }
+        }
+        return failedValidations;
     }
 
-    public EditText getTextView() {
-        return mTextView;
+    public List<ValidationResult> getValidationResults() {
+        return new ArrayList<ValidationResult>(mValidationResults);
     }
 }

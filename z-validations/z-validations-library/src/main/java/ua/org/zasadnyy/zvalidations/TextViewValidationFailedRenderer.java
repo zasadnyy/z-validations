@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -22,44 +21,41 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package ua.org.zasadnyy.zvalidations.validations;
+package ua.org.zasadnyy.zvalidations;
 
 import android.content.Context;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import ua.org.zasadnyy.zvalidations.Field;
-import ua.org.zasadnyy.zvalidations.R;
-import ua.org.zasadnyy.zvalidations.ValidationResult;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by vitaliyzasadnyy on 04.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public class InRange extends BaseValidation {
+public class TextViewValidationFailedRenderer implements ValidationFailedRenderer {
 
-    private int mMin;
-    private int mMax;
+    private Context mContext;
+    private List<TextView> mTextViews = new ArrayList<TextView>();
 
-    private InRange(Context context, int min, int max) {
-        super(context);
-        mMin = min;
-        mMax = max;
-    }
-
-    public static Validation build(Context context, int min, int max) {
-        return new InRange(context, min, max);
+    public TextViewValidationFailedRenderer(Context context) {
+        mContext = context;
     }
 
     @Override
-    public ValidationResult validate(Field field) {
-        EditText textView = field.getTextView();
-        boolean isValid = false;
-        try {
-            int value = Integer.parseInt(textView.getText().toString());
-            isValid = (value > mMin) && (value < mMax);
-        } catch (NumberFormatException ignored) {
-        }
-        return isValid ?
-            ValidationResult.buildSuccess(textView)
-            : ValidationResult.buildFailed(textView, mContext.getString(R.string.zvalidations_not_in_range, mMin, mMax));
+    public void showErrorMessage(ValidationResult validationResult) {
+        EditText textView = validationResult.getTextView();
+        mTextViews.add(textView);
+        textView.setError(validationResult.getMessage());
     }
+
+    @Override
+    public void clear() {
+        for (TextView textView : mTextViews) {
+            textView.setError(null);
+        }
+        mTextViews.clear();
+    }
+
 }

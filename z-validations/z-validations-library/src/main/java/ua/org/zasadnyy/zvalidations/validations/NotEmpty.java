@@ -27,7 +27,10 @@ package ua.org.zasadnyy.zvalidations.validations;
 
 import android.content.Context;
 import android.text.TextUtils;
+
+import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.R;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
@@ -43,12 +46,10 @@ public class NotEmpty extends BaseValidation {
     }
 
     @Override
-    public String getErrorMessage() {
-        return mContext.getString(R.string.zvalidations_empty);
-    }
-
-    @Override
-    public boolean isValid(String text) {
-        return !TextUtils.isEmpty(text);
+    public ValidationResult validate(Field field) {
+        boolean isValid = !TextUtils.isEmpty(field.getTextView().getText());
+        return isValid ?
+            ValidationResult.buildSuccess(field.getTextView())
+            : ValidationResult.buildFailed(field.getTextView(), mContext.getString(R.string.zvalidations_empty));
     }
 }

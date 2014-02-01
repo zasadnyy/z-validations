@@ -24,13 +24,14 @@
 
 package ua.org.zasadnyy.zvalidations.validations;
 
+import ua.org.zasadnyy.zvalidations.Field;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
+
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
  */
 public interface Validation {
 
-    String getErrorMessage();
-
-    boolean isValid(String text);
+    ValidationResult validate(Field field);
 
 }

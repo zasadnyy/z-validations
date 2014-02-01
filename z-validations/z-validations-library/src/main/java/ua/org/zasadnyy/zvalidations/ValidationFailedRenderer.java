@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -22,36 +21,15 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package ua.org.zasadnyy.zvalidations.validations;
-
-import android.content.Context;
-import android.widget.EditText;
-
-import ua.org.zasadnyy.zvalidations.Field;
-import ua.org.zasadnyy.zvalidations.R;
-import ua.org.zasadnyy.zvalidations.ValidationResult;
+package ua.org.zasadnyy.zvalidations;
 
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public class IsPositiveInteger extends BaseValidation {
+public interface ValidationFailedRenderer {
 
-    public static final String POSITIVE_INT_PATTERN = "\\d+";
+    void showErrorMessage(ValidationResult validationResult);
 
-    private IsPositiveInteger(Context context) {
-        super(context);
-    }
+    void clear();
 
-    public static Validation build(Context context) {
-        return new IsPositiveInteger(context);
-    }
-
-    @Override
-    public ValidationResult validate(Field field) {
-        EditText textView = field.getTextView();
-        boolean isValid = textView.getText().toString().matches(POSITIVE_INT_PATTERN);
-        return isValid ?
-            ValidationResult.buildSuccess(textView)
-            : ValidationResult.buildFailed(textView, mContext.getString(R.string.zvalidations_not_positive_integer));
-    }
 }

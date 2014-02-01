@@ -25,8 +25,11 @@
 package ua.org.zasadnyy.zvalidations.validations;
 
 import android.content.Context;
+import android.widget.EditText;
 
+import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.R;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
  * Created by vitaliyzasadnyy on 04.08.13.
@@ -46,12 +49,11 @@ public class IsEmail extends BaseValidation {
     }
 
     @Override
-    public String getErrorMessage() {
-        return mContext.getString(R.string.zvalidations_not_email);
-    }
-
-    @Override
-    public boolean isValid(String text) {
-        return text.matches(EMAIL_PATTERN);
+    public ValidationResult validate(Field field) {
+        EditText textView = field.getTextView();
+        boolean isValid = textView.getText().toString().matches(EMAIL_PATTERN);
+        return isValid ?
+            ValidationResult.buildSuccess(textView)
+            : ValidationResult.buildFailed(textView, mContext.getString(R.string.zvalidations_not_email));
     }
 }
