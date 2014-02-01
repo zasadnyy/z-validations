@@ -52,6 +52,10 @@ public class Form {
         this.mValidationFailedRenderer = renderer;
     }
 
+    public ValidationFailedRenderer getValidationFailedRenderer() {
+        return this.mValidationFailedRenderer;
+    }
+
     public boolean isValid() {
         boolean isValid = true;
         mValidationFailedRenderer.clear();

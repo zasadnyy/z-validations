@@ -13,11 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.Form;
 import ua.org.zasadnyy.zvalidations.FormUtils;
+import ua.org.zasadnyy.zvalidations.TextViewValidationFailedRenderer;
+import ua.org.zasadnyy.zvalidations.ToastValidationFailedRenderer;
+import ua.org.zasadnyy.zvalidations.ValidationFailedRenderer;
 import ua.org.zasadnyy.zvalidations.validations.InRange;
 import ua.org.zasadnyy.zvalidations.validations.IsEmail;
 import ua.org.zasadnyy.zvalidations.validations.NotEmpty;
@@ -32,8 +38,12 @@ public class SampleActivity extends Activity {
     private EditText mAge;
     private Button mSubmit;
 
+    private Menu mOptionsMenu;
+    private Map<Integer, ValidationFailedRenderer> mVaildationRenderers;
+
     // Form used for validation
     private Form mForm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +53,31 @@ public class SampleActivity extends Activity {
         initFields();
         initValidationForm();
         initCallbacks();
+        registerValidationErrorRenderers();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sample, menu);
+
+        mOptionsMenu = menu;
+        switchValidationFailedRenderer(R.id.action_show_error_as_crouton);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int itemId = item.getItemId();
+        switch (itemId) {
             case R.id.action_github:
                 openGitHub();
+                return true;
+            case R.id.action_show_error_as_toast:
+            case R.id.action_show_error_in_text_view:
+            case R.id.action_show_error_as_crouton:
+                switchValidationFailedRenderer(itemId);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -99,6 +121,16 @@ public class SampleActivity extends Activity {
         });
     }
 
+    private void registerValidationErrorRenderers() {
+        mVaildationRenderers = new HashMap<Integer, ValidationFailedRenderer>();
+
+        mVaildationRenderers.put(R.id.action_show_error_as_toast, new ToastValidationFailedRenderer(this));
+        mVaildationRenderers.put(R.id.action_show_error_in_text_view, new TextViewValidationFailedRenderer(this));
+
+        // add our custom validation error renderer
+        mVaildationRenderers.put(R.id.action_show_error_as_crouton, new CroutonValidationFailedRenderer(this));
+    }
+
     private void submit() {
         FormUtils.hideKeyboard(SampleActivity.this, mAge);
         if (mForm.isValid()) {
@@ -106,9 +138,19 @@ public class SampleActivity extends Activity {
         }
     }
 
+
     private void openGitHub() {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PAGE));
         startActivity(browserIntent);
+    }
+
+    private void switchValidationFailedRenderer(int selectedMenuItemId) {
+        for(int menuItemId : mVaildationRenderers.keySet()) {
+            mOptionsMenu.findItem(menuItemId).setChecked(menuItemId == selectedMenuItemId);
+        }
+
+        mForm.getValidationFailedRenderer().clear();
+        mForm.setValidationFailedRenderer(mVaildationRenderers.get(selectedMenuItemId));
     }
 
 }

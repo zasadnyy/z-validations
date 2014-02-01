@@ -26,12 +26,16 @@ package ua.org.zasadnyy.zvalidations;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vitaliyzasadnyy on 01.02.14.
  */
 public class ToastValidationFailedRenderer implements ValidationFailedRenderer {
 
     private Context mContext;
+    private List<Toast> mToasts = new ArrayList<Toast>();
 
     public ToastValidationFailedRenderer(Context context) {
         mContext = context;
@@ -39,12 +43,17 @@ public class ToastValidationFailedRenderer implements ValidationFailedRenderer {
 
     @Override
     public void showErrorMessage(ValidationResult validationResult) {
-        Toast.makeText(mContext, validationResult.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(mContext, validationResult.getMessage(), Toast.LENGTH_SHORT);
+        mToasts.add(toast);
+        toast.show();
     }
 
     @Override
     public void clear() {
-        // do nothing
+        for (Toast toast : mToasts) {
+            toast.cancel();
+        }
+        mToasts.clear();
     }
 
 }
