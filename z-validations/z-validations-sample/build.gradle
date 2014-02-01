@@ -15,6 +15,10 @@ repositories {
 dependencies {
     compile 'com.android.support:support-v4:13.0.+'
     compile project(':z-validations-library')
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
+        exclude module: 'support-v4'
+        compile 'com.android.support:support-v4:13.0.+'
+    }
 }
 
 android {

@@ -1,4 +1,4 @@
-package ua.org.zasadnyy.sample;
+package ua.org.zasadnyy.sample.zvalidations;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -71,6 +71,8 @@ public class SampleActivity extends Activity {
 
     private void initValidationForm() {
         mForm = new Form(this);
+        mForm.setValidationFailedRenderer(new CroutonValidationFailedRenderer(this));
+
         mForm.addField(Field.using(mName).validate(NotEmpty.build(this)));
         mForm.addField(Field.using(mEmail).validate(NotEmpty.build(this)).validate(IsEmail.build(this)));
         mForm.addField(Field.using(mAge).validate(InRange.build(this, 0, 120)));

@@ -16,10 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
-        exclude module: 'support-v4'
-        compile 'com.android.support:support-v4:13.0.+'
-    }
+
 }
 
 version = "0.1"
