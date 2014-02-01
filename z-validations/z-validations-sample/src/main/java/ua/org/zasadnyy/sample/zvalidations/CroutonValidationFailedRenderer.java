@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -22,34 +21,43 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package ua.org.zasadnyy.zvalidations.validations;
+package ua.org.zasadnyy.sample.zvalidations;
 
-import android.content.Context;
+import android.app.Activity;
 
-import ua.org.zasadnyy.zvalidations.R;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+import ua.org.zasadnyy.zvalidations.ValidationFailedRenderer;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public class IsPositiveInteger extends BaseValidation {
+public class CroutonValidationFailedRenderer implements ValidationFailedRenderer {
 
-    public static final String POSITIVE_INT_PATTERN = "\\d+";
+    private Activity mActivity;
+    private List<Crouton> mCroutons = new ArrayList<Crouton>();
 
-    private IsPositiveInteger(Context context) {
-        super(context);
-    }
-
-    public static Validation build(Context context) {
-        return new IsPositiveInteger(context);
+    public CroutonValidationFailedRenderer(Activity activity) {
+        this.mActivity = activity;
     }
 
     @Override
-    public String getErrorMessage() {
-        return mContext.getString(R.string.zvalidations_not_positive_integer);
+    public void showErrorMessage(ValidationResult validationResult) {
+        Crouton crouton = Crouton.makeText(mActivity, validationResult.getMessage(), Style.ALERT);
+        mCroutons.add(crouton);
+        crouton.show();
     }
 
     @Override
-    public boolean isValid(String text) {
-        return text.matches(POSITIVE_INT_PATTERN);
+    public void clear() {
+        for (Crouton crouton : mCroutons) {
+            crouton.cancel();
+        }
+        mCroutons.clear();
     }
+
 }

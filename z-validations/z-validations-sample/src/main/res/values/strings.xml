@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">Z-Validations Sample</string>
-    <string name="view_on_github">GITHUB</string>
+    <string name="view_on_github">GitHub</string>
     <string name="sample_activity_form_is_valid">Form is valid</string>
+    <string name="menu_textView_validation_failed_renderer">TextView Error</string>
+    <string name="menu_toast_validation_failed_renderer">Toast</string>
+    <string name="menu_crouton_validation_failed_renderer">Crouton</string>
+    <string name="menu_how_to_show_errors">Show errors as</string>
 
 </resources>

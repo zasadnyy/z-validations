@@ -22,57 +22,34 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package ua.org.zasadnyy.zvalidations;
+package ua.org.zasadnyy.zvalidations.validations;
 
-import android.app.Activity;
-import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.text.TextUtils;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
+import ua.org.zasadnyy.zvalidations.Field;
+import ua.org.zasadnyy.zvalidations.R;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
  * Created by vitaliyzasadnyy on 01.08.13.
  */
-public class Form {
+public class NotEmpty extends BaseValidation {
 
-    private List<Field> mFields = new ArrayList<Field>();
-    private Activity mActivity;
-
-    public Form(Activity activity) {
-        this.mActivity = activity;
+    public static Validation build(Context context) {
+        return new NotEmpty(context);
     }
 
-    public void addField(Field field) {
-        mFields.add(field);
+    private NotEmpty(Context context) {
+        super(context);
     }
 
-    public boolean isValid() {
-        boolean isValid = true;
-
-        for (Field field : mFields) {
-            ValidationResult result = field.validate();
-
-            if (!result.isValid()) {
-                EditText textView = result.getTextView();
-                textView.requestFocus();
-                textView.selectAll();
-
-                FormUtils.showKeyboard(mActivity, textView);
-
-                showErrorMessage(result.getMessage());
-
-                isValid = false;
-                break;
-            }
-        }
-
-        return isValid;
-    }
-
-    protected void showErrorMessage(String message) {
-        Crouton.makeText(mActivity, message, Style.ALERT).show();
+    @Override
+    public ValidationResult validate(Field field) {
+        boolean isValid = !TextUtils.isEmpty(field.getTextView().getText());
+        return isValid ?
+            ValidationResult.buildSuccess(field.getTextView())
+            : ValidationResult.buildFailed(field.getTextView(), mContext.getString(R.string.zvalidations_empty));
     }
 }

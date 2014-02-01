@@ -35,7 +35,15 @@ public class ValidationResult {
     private final String mMessage;
     private final EditText mTextView;
 
-    public ValidationResult(boolean isValid, String message, EditText textView) {
+    public static ValidationResult buildSuccess(EditText textView) {
+        return new ValidationResult(true, "", textView);
+    }
+
+    public static ValidationResult buildFailed(EditText textView, String message) {
+        return new ValidationResult(false, message, textView);
+    }
+
+    private ValidationResult(boolean isValid, String message, EditText textView) {
         mIsValid = isValid;
         mMessage = message;
         mTextView = textView;

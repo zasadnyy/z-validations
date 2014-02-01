@@ -1,6 +1,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_github"
-          android:title="@string/view_on_github"
-          android:orderInCategory="100"
-          android:showAsAction="always" />
+
+    <item
+            android:id="@+id/action_github"
+            android:title="@string/view_on_github"
+            android:orderInCategory="100"
+            android:showAsAction="always"/>
+    <item
+            android:title="@string/menu_how_to_show_errors"
+            android:enabled="false"
+            android:showAsAction="never"/>
+    <group
+            android:id="@+id/menu_group_select_validation_failed_renderer"
+            android:checkableBehavior="single">
+        <item
+                android:id="@+id/action_show_error_in_text_view"
+                android:title="@string/menu_textView_validation_failed_renderer"
+                android:checkable="true"
+                android:showAsAction="never">
+        </item>
+        <item
+                android:id="@+id/action_show_error_as_toast"
+                android:title="@string/menu_toast_validation_failed_renderer"
+                android:checkable="true"
+                android:showAsAction="never">
+        </item>
+        <item
+                android:id="@+id/action_show_error_as_crouton"
+                android:title="@string/menu_crouton_validation_failed_renderer"
+                android:checkable="true"
+                android:showAsAction="never">
+        </item>
+    </group>
+
 </menu>

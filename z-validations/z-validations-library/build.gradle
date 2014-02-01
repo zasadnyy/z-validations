@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.7.0'
     }
 }
 apply plugin: 'android-library'
@@ -16,15 +16,12 @@ repositories {
 }
 
 dependencies {
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.1') {
-        exclude module: 'support-v4'
-        compile 'com.android.support:support-v4:13.0.+'
-    }
+
 }
 
 version = "0.1"
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0.0"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
 }

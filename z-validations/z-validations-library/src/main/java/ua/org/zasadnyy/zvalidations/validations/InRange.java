@@ -24,31 +24,42 @@
 
 package ua.org.zasadnyy.zvalidations.validations;
 
-
 import android.content.Context;
-import android.text.TextUtils;
+import android.widget.EditText;
+
+import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.R;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 04.08.13.
  */
-public class NotEmpty extends BaseValidation {
+public class InRange extends BaseValidation {
 
-    public static Validation build(Context context) {
-        return new NotEmpty(context);
-    }
+    private int mMin;
+    private int mMax;
 
-    private NotEmpty(Context context) {
+    private InRange(Context context, int min, int max) {
         super(context);
+        mMin = min;
+        mMax = max;
+    }
+
+    public static Validation build(Context context, int min, int max) {
+        return new InRange(context, min, max);
     }
 
     @Override
-    public String getErrorMessage() {
-        return mContext.getString(R.string.zvalidations_empty);
-    }
-
-    @Override
-    public boolean isValid(String text) {
-        return !TextUtils.isEmpty(text);
+    public ValidationResult validate(Field field) {
+        EditText textView = field.getTextView();
+        boolean isValid = false;
+        try {
+            int value = Integer.parseInt(textView.getText().toString());
+            isValid = (value > mMin) && (value < mMax);
+        } catch (NumberFormatException ignored) {
+        }
+        return isValid ?
+            ValidationResult.buildSuccess(textView)
+            : ValidationResult.buildFailed(textView, mContext.getString(R.string.zvalidations_not_in_range, mMin, mMax));
     }
 }

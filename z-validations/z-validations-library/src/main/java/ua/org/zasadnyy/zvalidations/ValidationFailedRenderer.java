@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -22,15 +21,15 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package ua.org.zasadnyy.zvalidations.validations;
+package ua.org.zasadnyy.zvalidations;
 
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public interface Validation {
+public interface ValidationFailedRenderer {
 
-    String getErrorMessage();
+    void showErrorMessage(ValidationResult validationResult);
 
-    boolean isValid(String text);
+    void clear();
 
 }

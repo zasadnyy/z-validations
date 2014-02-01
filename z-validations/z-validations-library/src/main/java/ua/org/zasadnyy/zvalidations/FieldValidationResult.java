@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -24,46 +23,44 @@
 
 package ua.org.zasadnyy.zvalidations;
 
-import android.widget.EditText;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ua.org.zasadnyy.zvalidations.validations.Validation;
-
 /**
- * Created by vitaliyzasadnyy on 01.08.13.
+ * Created by vitaliyzasadnyy on 01.02.14.
  */
-public class Field {
+public class FieldValidationResult {
 
-    private List<Validation> mValidations = new LinkedList<Validation>();
-    private EditText mTextView;
+    private List<ValidationResult> mValidationResults = new LinkedList<ValidationResult>();
 
-    private Field(EditText textView) {
-        this.mTextView = textView;
+    public FieldValidationResult() {
     }
 
-    public static Field using(EditText textView) {
-        return new Field(textView);
+    public void addValidationResult(ValidationResult validationResult) {
+        mValidationResults.add(validationResult);
     }
 
-    public Field validate(Validation what) {
-        mValidations.add(what);
-        return this;
-    }
-
-    public EditText getTextView() {
-        return mTextView;
-    }
-
-    public ValidationResult validate() {
-        for (Validation validation : mValidations) {
-            if (!validation.isValid(mTextView.getText().toString())) {
-                String errorMessage = validation.getErrorMessage();
-                return new ValidationResult(false, errorMessage, mTextView);
+    public boolean isValid() {
+        for (ValidationResult validationResult : mValidationResults) {
+            if (!validationResult.isValid()) {
+                return false;
             }
         }
-        return new ValidationResult(true, null, null);
+        return true;
     }
 
+    public List<ValidationResult> getFailedValidationResults() {
+        List<ValidationResult> failedValidations = new LinkedList<ValidationResult>();
+        for (ValidationResult validationResult : mValidationResults) {
+            if(!validationResult.isValid()) {
+                failedValidations.add(validationResult);
+            }
+        }
+        return failedValidations;
+    }
+
+    public List<ValidationResult> getValidationResults() {
+        return new ArrayList<ValidationResult>(mValidationResults);
+    }
 }

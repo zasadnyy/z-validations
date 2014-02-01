@@ -1,1 +1,1 @@
-include ':z-validations', ':z-validations-sample'
+include ':z-validations-library', ':z-validations-sample'

@@ -25,41 +25,33 @@
 package ua.org.zasadnyy.zvalidations.validations;
 
 import android.content.Context;
+import android.widget.EditText;
 
+import ua.org.zasadnyy.zvalidations.Field;
 import ua.org.zasadnyy.zvalidations.R;
+import ua.org.zasadnyy.zvalidations.ValidationResult;
 
 /**
- * Created by vitaliyzasadnyy on 04.08.13.
+ * Created by vitaliyzasadnyy on 01.08.13.
  */
-public class InRange extends BaseValidation {
+public class IsPositiveInteger extends BaseValidation {
 
-    private int mMin;
-    private int mMax;
+    public static final String POSITIVE_INT_PATTERN = "\\d+";
 
-    private InRange(Context context, int min, int max) {
+    private IsPositiveInteger(Context context) {
         super(context);
-        mMin = min;
-        mMax = max;
     }
 
-    public static Validation build(Context context, int min, int max) {
-        return new InRange(context, min, max);
-    }
-
-    @Override
-    public String getErrorMessage() {
-        return mContext.getString(R.string.zvalidations_not_in_range, mMin, mMax);
+    public static Validation build(Context context) {
+        return new IsPositiveInteger(context);
     }
 
     @Override
-    public boolean isValid(String text) {
-        try {
-            int value = Integer.parseInt(text);
-            if ((value > mMin) && (value < mMax)) {
-                return true;
-            }
-        } catch (NumberFormatException ignored) {
-        }
-        return false;
+    public ValidationResult validate(Field field) {
+        EditText textView = field.getTextView();
+        boolean isValid = textView.getText().toString().matches(POSITIVE_INT_PATTERN);
+        return isValid ?
+            ValidationResult.buildSuccess(textView)
+            : ValidationResult.buildFailed(textView, mContext.getString(R.string.zvalidations_not_positive_integer));
     }
 }
