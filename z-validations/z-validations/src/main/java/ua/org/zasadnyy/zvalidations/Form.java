@@ -26,7 +26,6 @@ package ua.org.zasadnyy.zvalidations;
 
 import android.app.Activity;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,28 +50,29 @@ public class Form {
     }
 
     public boolean isValid() {
-        boolean result = true;
-        try {
-            for (Field field : mFields) {
-                result &= field.isValid();
+        boolean isValid = true;
+
+        for (Field field : mFields) {
+            ValidationResult result = field.validate();
+
+            if (!result.isValid()) {
+                EditText textView = result.getTextView();
+                textView.requestFocus();
+                textView.selectAll();
+
+                FormUtils.showKeyboard(mActivity, textView);
+
+                showErrorMessage(result.getMessage());
+
+                isValid = false;
+                break;
             }
-        } catch (FieldValidationException e) {
-            result = false;
-
-            EditText textView = e.getTextView();
-            textView.requestFocus();
-            textView.selectAll();
-
-            FormUtils.showKeyboard(mActivity, textView);
-
-            showErrorMessage(e.getMessage());
         }
-        return result;
+
+        return isValid;
     }
 
     protected void showErrorMessage(String message) {
         Crouton.makeText(mActivity, message, Style.ALERT).show();
     }
-
-
 }
