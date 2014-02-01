@@ -51,7 +51,7 @@ Since v.0.2 you can change how validation errors are displayed. Library includes
 ```
 
 
-Checkout sample project for full usage example.    
+Checkout sample project for full usage example or install it from [Google Play](https://play.google.com/store/apps/details?id=ua.org.zasadnyy.sample.zvalidations)
     
     
 Changelog
