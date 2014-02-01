@@ -14,11 +14,19 @@ Available validations
 * IsPositiveInteger - checks if fiels value is integer and if ```value > 0```
 * InRange - checks if field value is integer and is in range ```min < value < max```
  
-You can easyly create your own validations, just implement ```ua.org.zasadnyy.zvalidations.validation.Validation``` interface
+You can easily create your own validations, just implement ```ua.org.zasadnyy.zvalidations.validation.Validation``` interface
 
 
 Sample usage
 ------------
+Include into your project. If you're using gradle simply copy ```z-validations-library``` folder into your project and update your ```build.gradle``` dependencies list
+```groovy
+    dependencies {
+        compile project(':z-validations-library')
+        ...
+    }
+```
+
 
 Create validation form and add some validations
 ```java
@@ -36,12 +44,25 @@ Check if form is valid
         }
     }
 ```
+
+Since v.0.2 you can change how validation errors are displayed. Library includes error renderers using ```TextView``` errors (used by default) and ```Toast```s. You can create your own by implementing ```ua.org.zasadnyy.zvalidations.ValidationFailedRenderer``` interface
+```java
+    mForm.setValidationFailedRenderer(new TextViewValidationFailedRenderer(mContext));
+```
+
+
 Checkout sample project for full usage example.    
     
     
 Changelog
 ---------
 
-__Current version: 0.1__
+__Current version: 0.2__
 
-__v.0.1__ Initial release
+__v.0.2__ 
+* Code refactoring (thanks [tadfisher](https://github.com/tadfisher) for pull request)
+* Added ability to change how validation errors are displayed
+* Moved [Crouton](https://github.com/keyboardsurfer/Crouton) dependency from library to sample project
+
+__v.0.1__ 
+* Initial release
