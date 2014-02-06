@@ -13,6 +13,7 @@ Available validations
 * IsEmail - checks if field is valid email
 * IsPositiveInteger - checks if fiels value is integer and if ```value > 0```
 * InRange - checks if field value is integer and is in range ```min < value < max```
+* HasMinimumLength - checks if field value lenght is ```value.lenght >= min```
  
 You can easily create your own validations, just implement ```ua.org.zasadnyy.zvalidations.validation.Validation``` interface
 
