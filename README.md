@@ -60,6 +60,9 @@ Changelog
 
 __Current version: 0.2__
 
+__v.0.2.1__ 
+* Added HasMinimumLength validation (thanks [TheoTzaferis](https://github.com/TheoTzaferis) for pull request)
+
 __v.0.2__ 
 * Code refactoring (thanks [tadfisher](https://github.com/tadfisher) for pull request)
 * Added ability to change how validation errors are displayed
