@@ -71,3 +71,7 @@ __v.0.2__
 
 __v.0.1__ 
 * Initial release
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zasadnyy/z-validations/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
