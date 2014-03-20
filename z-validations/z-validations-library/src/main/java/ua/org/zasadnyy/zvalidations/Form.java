@@ -24,7 +24,7 @@
 
 package ua.org.zasadnyy.zvalidations;
 
-import android.app.Activity;
+import android.content.Context;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -37,11 +37,11 @@ public class Form {
 
     private List<Field> mFields = new ArrayList<Field>();
     private ValidationFailedRenderer mValidationFailedRenderer;
-    private Activity mActivity;
+    private Context mContext;
 
-    public Form(Activity activity) {
-        this.mActivity = activity;
-        this.mValidationFailedRenderer = new TextViewValidationFailedRenderer(activity);
+    public Form(Context context) {
+        this.mContext = context;
+        this.mValidationFailedRenderer = new TextViewValidationFailedRenderer(context);
     }
 
     public void addField(Field field) {
@@ -69,7 +69,7 @@ public class Form {
                 textView.requestFocus();
                 textView.selectAll();
 
-                FormUtils.showKeyboard(mActivity, textView);
+                FormUtils.showKeyboard(mContext, textView);
 
                 mValidationFailedRenderer.showErrorMessage(firstFailedValidation);
 
