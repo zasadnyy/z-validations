@@ -132,7 +132,7 @@ public class SampleActivity extends Activity {
     }
 
     private void submit() {
-        FormUtils.hideKeyboard(SampleActivity.this, mAge);
+        FormUtils.hideKeyboard(SampleActivity.this);
         if (mForm.isValid()) {
             Crouton.makeText(this, getString(R.string.sample_activity_form_is_valid), Style.CONFIRM).show();
         }

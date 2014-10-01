@@ -24,6 +24,7 @@
 
 package ua.org.zasadnyy.zvalidations;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -42,12 +43,12 @@ public class FormUtils {
         }
     }
 
-    public static void hideKeyboard(Context context, TextView textView) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (imm != null) {
             // only will trigger it if no physical keyboard is open
-            imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getRootView().getWindowToken(), 0);
         }
     }
 }
