@@ -3,7 +3,7 @@ z-validations
 
 Small library that helps with Android form validations
 
-_Library was written in scope of post: [Android form validation - the right way](http://blog.zasadnyy.org.ua/2013/08/android-form-validation-right-way.html)_
+_Library was written in scope of post: [Android form validation - the right way](http://v.zasadnyy.com/blog/android-form-validation-right-way/)_
 
 ![Chuck Noris is always valid](http://4.bp.blogspot.com/-aB-mb25JcW8/Uf7EW9VKOuI/AAAAAAABKP8/jkVW7J7T04E/s1600/chuck-is-always-valid.png)
 
