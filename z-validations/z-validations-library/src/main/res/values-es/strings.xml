@@ -26,11 +26,11 @@
 
     <string name="lib_name">Z-Validations</string>
 
-    <string name="zvalidations_not_positive_integer">Field should be positive integer</string>
-    <string name="zvalidations_empty">Field could not be empty</string>
-    <string name="zvalidations_not_in_range">Field should be between %1$d and %2$d</string>
-    <string name="zvalidations_not_email">Value is not valid email address</string>
-    <string name="zvalidations_too_short">Minimum field length is %1$d characters</string>
-    <string name="zvalidations_passwords_dont_match">Passwords doesn\'t match</string>
+    <string name="zvalidations_not_positive_integer">El valor debe ser un número entero positivo</string>
+    <string name="zvalidations_empty">El campo no puede estar vacío</string>
+    <string name="zvalidations_not_in_range">El valor debe estar entre %1$d y %2$d</string>
+    <string name="zvalidations_not_email">El texto no es una dirección de email válida</string>
+    <string name="zvalidations_too_short">La longitud mínima del campo es de %1$d caracteres</string>
+    <string name="zvalidations_passwords_dont_match">Las contraseñas no coinciden</string>
 
 </resources>
